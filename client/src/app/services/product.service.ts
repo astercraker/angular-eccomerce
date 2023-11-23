@@ -27,6 +27,11 @@ export class ProductService {
     return this._api.getTypeRequest('products/' + id);
   }
 
+  getProductByTitle(title: String): Observable<any> {
+    console.log(title);
+    return this._api.getTypeRequest('products/title/' + title);
+  }
+
   getCategories(): Observable<any> {
     return this._api.postTypeRequest('products/categories', {});
   }

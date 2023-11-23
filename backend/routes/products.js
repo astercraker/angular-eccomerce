@@ -44,6 +44,24 @@ router.get("/:productId", async (req, res) => {
   );
 });
 
+router.get("/title/:productTitle", async (req, res) => {
+  const { productTitle } = req.params;
+  db.query(
+    `SELECT p.id, p.title, p.image, p.images, p.description, p.price, p.quantity, p.short_desc,
+        c.title as category, p.cat_id FROM products p JOIN categories c ON
+            c.id = p.cat_id WHERE p.title LIKE ?`,
+    [`%${productTitle}%`], // Use parameterized query to prevent SQL injection
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Internal Server Error");
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
 router.post("/add", async (req, res) => {
   const { title, description, short_desc, image, price, quantity, cat_id } = req.body;
 

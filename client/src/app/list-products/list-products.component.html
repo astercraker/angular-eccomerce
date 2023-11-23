@@ -9,6 +9,19 @@
           <span nz-icon nzType="plus"></span>
           Add product
         </button>
+        <div class="search-bar">
+          <input
+          nz-input
+          type="text"
+          name="filter"
+          placeholder="Enter product name"
+          [(ngModel)]="filter"
+        />
+        <button nz-button nzType="primary" (click)="searchProduct()">
+          <span nz-icon nzType="search"></span>
+          Search
+        </button>
+        </div>
       </div>
       <table>
         <thead>

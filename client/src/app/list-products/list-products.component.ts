@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class ListProductsComponent implements OnInit {
   products: Product[] = [];
   productPageCounter = 1;
+  filter = '';
   constructor(private productService: ProductService, private router: Router) {}
 
   redirectToEdit(id) {
@@ -19,6 +20,18 @@ export class ListProductsComponent implements OnInit {
     } else {
       this.router.navigate(['/admin/product/create']);
     }
+  }
+
+  searchProduct(){
+    this.productService.getProductByTitle(this.filter).subscribe(
+      (res: any) => {
+        console.log("resultado Search -- ",res);
+        this.products = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
   }
 
   leftPage() {
@@ -35,9 +48,7 @@ export class ListProductsComponent implements OnInit {
     setTimeout(() => {
       this.productService.getAllProducts(10, this.productPageCounter).subscribe(
         (res: any) => {
-          console.log(res);
           this.products = res;
-          console.log(res);
         },
         (err) => {
           console.log(err);
